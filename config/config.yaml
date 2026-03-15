@@ -1,0 +1,3 @@
+project_name: cookiecutter_data_science_base
+random_state: 42
+target: target

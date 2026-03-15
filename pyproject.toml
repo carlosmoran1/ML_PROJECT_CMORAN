@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cookiecutter_data_science_base"
+version = "0.1.0"
+description = "Plantilla base de Data Science para GitHub"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  { name = "Carlos" }
+]
+dependencies = []
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
