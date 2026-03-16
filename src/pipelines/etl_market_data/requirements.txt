@@ -1,9 +1,9 @@
 pandas
 numpy
 pyarrow
+requests
 google-cloud-storage
 google-cloud-secret-manager
-google-cloud-bigquery
-requests
 flask
 gunicorn 
+numpy
