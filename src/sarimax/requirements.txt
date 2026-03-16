@@ -2,8 +2,9 @@ pandas
 numpy
 pyarrow
 google-cloud-storage
-google-cloud-secret-manager
 google-cloud-bigquery
-requests
+gcsfs
+statsmodels
+scikit-learn
 flask
-gunicorn 
+gunicorn
