@@ -6,4 +6,5 @@ google-cloud-storage
 google-cloud-secret-manager
 flask
 gunicorn 
-numpy
+fredapi
+numpy 
