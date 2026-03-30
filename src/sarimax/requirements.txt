@@ -5,6 +5,7 @@ google-cloud-storage
 google-cloud-bigquery
 gcsfs
 statsmodels
-scikit-learn
+scikit-learn 
+scipy
 flask
 gunicorn
