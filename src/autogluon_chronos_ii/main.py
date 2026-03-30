@@ -3,15 +3,21 @@ import os
 import shutil
 import warnings
 
+try:
+    from src.common.ml_gcp_utils import (
+        download_feature_config,
+        load_source_df,
+        overwrite_model_only,
+    )
+except ImportError:
+    from ml_gcp_utils import (
+        download_feature_config,
+        load_source_df,
+        overwrite_model_only,
+    )
+
+
 warnings.filterwarnings("ignore")
-
-from src.autogluon_chronos_ii.train import build_predictions
-from src.common.ml_gcp_utils import (
-    download_feature_config,
-    load_source_df,
-    overwrite_model_only,
-)
-
 
 PROJECT_ID = os.getenv("PROJECT_ID", "proyectos-cmoran-489000")
 DATASET = os.getenv("DATASET", "data_procesada_commodities")
