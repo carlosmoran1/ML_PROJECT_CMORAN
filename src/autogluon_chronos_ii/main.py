@@ -9,13 +9,14 @@ try:
         load_source_df,
         overwrite_model_only,
     )
+    from src.autogluon_chronos_ii.train import build_predictions
 except ImportError:
     from ml_gcp_utils import (
         download_feature_config,
         load_source_df,
         overwrite_model_only,
     )
-
+    from train import build_predictions
 
 warnings.filterwarnings("ignore")
 
