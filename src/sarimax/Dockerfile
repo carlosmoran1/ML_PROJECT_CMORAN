@@ -2,11 +2,14 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-COPY src/pipelines/sarimax/requirements.txt ./requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PORT=8080
 
-COPY src /app/src
+COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
-ENV PYTHONPATH=/app
+COPY . .
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "src.pipelines.sarimax.main:app"]
+CMD exec gunicorn --bind :$PORT main:app
