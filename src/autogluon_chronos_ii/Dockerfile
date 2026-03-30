@@ -6,10 +6,11 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV PORT=8080
 
-COPY requirements.txt .
+COPY src/autogluon_chronos_ii/requirements.txt /app/requirements.txt
+
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+    pip install --no-cache-dir -r /app/requirements.txt
 
-COPY . .
+COPY src /app/src
 
-CMD exec gunicorn --bind :$PORT main:app
+CMD ["functions-framework", "--source=src/autogluon_chronos_ii/main.py", "--target=autogluon_predict", "--host=0.0.0.0", "--port=8080"]
