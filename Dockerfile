@@ -7,14 +7,14 @@ ENV PYTHONUNBUFFERED=1
 ENV PYTHONPATH=/app
 ENV PORT=8080
 
+COPY requirements.txt /app/requirements.txt
 COPY src /app/src
-COPY src/pipelines/etl_market_data/requirements.txt /app/requirements.txt
 
 RUN python -m pip install --no-cache-dir --upgrade pip && \
     python -m pip install --no-cache-dir -r /app/requirements.txt && \
     python -m pip show functions-framework
 
-CMD exec python -m functions_framework \
-  --target=etl_commodities \
-  --source=/app/src/pipelines/etl_market_data/main.py \
-  --port=$PORT
+CMD exec sh -c 'python -m functions_framework \
+  --target="${FUNCTION_TARGET}" \
+  --source="${FUNCTION_SOURCE}" \
+  --port="${PORT}"'
