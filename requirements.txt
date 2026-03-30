@@ -11,4 +11,5 @@ statsmodels
 scipy
 scikit-learn
 autogluon.timeseries
-functions-framework==3.*
+functions-framework==3.* 
+db-dtypes
