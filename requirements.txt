@@ -4,6 +4,11 @@ pyarrow
 google-cloud-storage
 google-cloud-secret-manager
 google-cloud-bigquery
+gcsfs
 requests
-flask
-gunicorn 
+fredapi
+statsmodels
+scipy
+scikit-learn
+autogluon.timeseries
+functions-framework==3.*

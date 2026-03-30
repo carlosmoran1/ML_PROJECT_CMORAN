@@ -1,21 +1,16 @@
 import json
 import os
+import traceback
 import warnings
 
-try:
-    from src.common.ml_gcp_utils import (
-        download_feature_config,
-        load_source_df,
-        overwrite_model_only,
-    )
-    from src.sarimax.train import build_predictions
-except ImportError:
-    from ml_gcp_utils import (
-        download_feature_config,
-        load_source_df,
-        overwrite_model_only,
-    )
-    from train import build_predictions
+import functions_framework
+
+from src.common.ml_gcp_utils import (
+    download_feature_config,
+    load_source_df,
+    overwrite_model_only,
+)
+from src.sarimax.train import build_predictions
 
 warnings.filterwarnings("ignore")
 
@@ -38,8 +33,11 @@ MODEL_LABEL = os.getenv("MODEL_LABEL", "sarimax")
 FUTURE_EXOG_METHOD = os.getenv("FUTURE_EXOG_METHOD", "last")
 
 
-def main(request):
+def run_model() -> dict:
     df_full = load_source_df(project_id=PROJECT_ID, source_table=SOURCE_TABLE)
+    if df_full.empty:
+        raise ValueError(f"La tabla fuente está vacía: {SOURCE_TABLE}")
+
     exog_by_asset = download_feature_config(
         project_id=PROJECT_ID,
         features_bucket=FEATURES_BUCKET,
@@ -61,7 +59,7 @@ def main(request):
         preds_df=preds_df,
     )
 
-    response = {
+    return {
         "status": "ok",
         "modelo": MODEL_LABEL,
         "source_table": SOURCE_TABLE,
@@ -71,4 +69,35 @@ def main(request):
         "min_fecha_prediccion": str(preds_df["fecha_prediccion"].min()),
         "max_fecha_prediccion": str(preds_df["fecha_prediccion"].max()),
     }
-    return (json.dumps(response, ensure_ascii=False), 200, {"Content-Type": "application/json"})
+
+
+@functions_framework.http
+def sarimax_predict(request):
+    if request.method != "POST":
+        return (
+            json.dumps(
+                {"status": "error", "message": "Método no permitido. Usa POST."},
+                ensure_ascii=False,
+            ),
+            405,
+            {"Content-Type": "application/json"},
+        )
+
+    try:
+        response = run_model()
+        return (
+            json.dumps(response, ensure_ascii=False),
+            200,
+            {"Content-Type": "application/json"},
+        )
+    except Exception as e:
+        print("ERROR FATAL EN SARIMAX:")
+        print(traceback.format_exc())
+        return (
+            json.dumps(
+                {"status": "error", "message": str(e)},
+                ensure_ascii=False,
+            ),
+            500,
+            {"Content-Type": "application/json"},
+        )

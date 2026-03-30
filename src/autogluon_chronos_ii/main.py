@@ -88,10 +88,7 @@ def autogluon_predict(request):
     if request.method != "POST":
         return (
             json.dumps(
-                {
-                    "status": "error",
-                    "message": "Método no permitido. Usa POST."
-                },
+                {"status": "error", "message": "Método no permitido. Usa POST."},
                 ensure_ascii=False,
             ),
             405,
@@ -110,10 +107,7 @@ def autogluon_predict(request):
         print(traceback.format_exc())
         return (
             json.dumps(
-                {
-                    "status": "error",
-                    "message": str(e),
-                },
+                {"status": "error", "message": str(e)},
                 ensure_ascii=False,
             ),
             500,
