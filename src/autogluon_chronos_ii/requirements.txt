@@ -6,5 +6,4 @@ google-cloud-bigquery
 gcsfs
 scikit-learn
 autogluon.timeseries
-flask
-gunicorn
+functions-framework==3.*

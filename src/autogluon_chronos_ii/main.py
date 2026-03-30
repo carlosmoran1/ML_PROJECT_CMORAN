@@ -1,22 +1,17 @@
 import json
 import os
 import shutil
+import traceback
 import warnings
 
-try:
-    from src.common.ml_gcp_utils import (
-        download_feature_config,
-        load_source_df,
-        overwrite_model_only,
-    )
-    from src.autogluon_chronos_ii.train import build_predictions
-except ImportError:
-    from ml_gcp_utils import (
-        download_feature_config,
-        load_source_df,
-        overwrite_model_only,
-    )
-    from train import build_predictions
+import functions_framework
+
+from src.common.ml_gcp_utils import (
+    download_feature_config,
+    load_source_df,
+    overwrite_model_only,
+)
+from src.autogluon_chronos_ii.train import build_predictions
 
 warnings.filterwarnings("ignore")
 
@@ -42,12 +37,15 @@ AG_EVAL_METRIC = os.getenv("AG_EVAL_METRIC", "MAPE")
 AG_ROOT_PATH = os.getenv("AG_ROOT_PATH", "/tmp/ag_chronos2_prod")
 
 
-def main(request):
+def run_model() -> dict:
     if os.path.exists(AG_ROOT_PATH):
         shutil.rmtree(AG_ROOT_PATH, ignore_errors=True)
     os.makedirs(AG_ROOT_PATH, exist_ok=True)
 
     df_full = load_source_df(project_id=PROJECT_ID, source_table=SOURCE_TABLE)
+    if df_full.empty:
+        raise ValueError(f"La tabla fuente está vacía: {SOURCE_TABLE}")
+
     exog_by_asset = download_feature_config(
         project_id=PROJECT_ID,
         features_bucket=FEATURES_BUCKET,
@@ -72,7 +70,7 @@ def main(request):
         preds_df=preds_df,
     )
 
-    response = {
+    return {
         "status": "ok",
         "modelo": MODEL_LABEL,
         "preset": AG_PRESET,
@@ -83,4 +81,41 @@ def main(request):
         "min_fecha_prediccion": str(preds_df["fecha_prediccion"].min()),
         "max_fecha_prediccion": str(preds_df["fecha_prediccion"].max()),
     }
-    return (json.dumps(response, ensure_ascii=False), 200, {"Content-Type": "application/json"})
+
+
+@functions_framework.http
+def autogluon_predict(request):
+    if request.method != "POST":
+        return (
+            json.dumps(
+                {
+                    "status": "error",
+                    "message": "Método no permitido. Usa POST."
+                },
+                ensure_ascii=False,
+            ),
+            405,
+            {"Content-Type": "application/json"},
+        )
+
+    try:
+        response = run_model()
+        return (
+            json.dumps(response, ensure_ascii=False),
+            200,
+            {"Content-Type": "application/json"},
+        )
+    except Exception as e:
+        print("ERROR FATAL EN AUTOGLUON:")
+        print(traceback.format_exc())
+        return (
+            json.dumps(
+                {
+                    "status": "error",
+                    "message": str(e),
+                },
+                ensure_ascii=False,
+            ),
+            500,
+            {"Content-Type": "application/json"},
+        )
