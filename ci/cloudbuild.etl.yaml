@@ -1,0 +1,34 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -f
+      - Dockerfile
+      - -t
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPO}/etl-market-data:$BUILD_ID
+      - .
+
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPO}/etl-market-data:$BUILD_ID
+
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        gcloud run deploy etl-market-data \
+          --image ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPO}/etl-market-data:$BUILD_ID \
+          --region ${_REGION} \
+          --service-account ${_RUNTIME_SA_EMAIL} \
+          --no-allow-unauthenticated \
+          --cpu 2 \
+          --memory 4Gi \
+          --timeout 3600 \
+          --concurrency 1 \
+          --max-instances 1 \
+          --set-env-vars PROJECT_ID=$PROJECT_ID,BUCKET_RAW=${_BUCKET_RAW},DESTINATION_BLOB=data/raw/data_historica_full.parquet,FRED_SECRET_ID=fred-api-key,EIA_SECRET_ID=eia-api-key,FUNCTION_TARGET=etl_commodities,FUNCTION_SOURCE=/app/src/pipelines/etl_market_data/main.py
+
+options:
+  logging: CLOUD_LOGGING_ONLY

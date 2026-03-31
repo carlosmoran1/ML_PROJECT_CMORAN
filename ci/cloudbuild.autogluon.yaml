@@ -1,0 +1,34 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -f
+      - Dockerfile
+      - -t
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPO}/autogluon-chronos-ii:$BUILD_ID
+      - .
+
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPO}/autogluon-chronos-ii:$BUILD_ID
+
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        gcloud run deploy autogluon-chronos-ii \
+          --image ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPO}/autogluon-chronos-ii:$BUILD_ID \
+          --region ${_REGION} \
+          --service-account ${_RUNTIME_SA_EMAIL} \
+          --no-allow-unauthenticated \
+          --cpu 4 \
+          --memory 8Gi \
+          --timeout 3600 \
+          --concurrency 1 \
+          --max-instances 1 \
+          --set-env-vars PROJECT_ID=$PROJECT_ID,DATASET=data_procesada_commodities,SOURCE_TABLE=$PROJECT_ID.data_procesada_commodities.hechos_data_proc_commodities,TARGET_TABLE=$PROJECT_ID.data_procesada_commodities.predicciones_commodities,FEATURES_BUCKET=${_BUCKET_RAW},FEATURES_BLOB=data/features/dim_features_commodities.csv,MODEL_LABEL=autogluon,HORIZON=10,FUTURE_EXOG_METHOD=last,AG_PRESET=chronos2,AG_EVAL_METRIC=MAPE,AG_ROOT_PATH=/tmp/ag_chronos2_prod,FUNCTION_TARGET=autogluon_predict,FUNCTION_SOURCE=/app/src/autogluon_chronos_ii/main.py
+
+options:
+  logging: CLOUD_LOGGING_ONLY
