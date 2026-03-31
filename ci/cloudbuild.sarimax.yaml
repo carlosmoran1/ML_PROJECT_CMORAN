@@ -1,0 +1,34 @@
+steps
+  - name gcr.iocloud-buildersdocker
+    args
+      - build
+      - -f
+      - Dockerfile
+      - -t
+      - ${_REGION}-docker.pkg.dev$PROJECT_ID${_AR_REPO}sarimax-model$BUILD_ID
+      - .
+
+  - name gcr.iocloud-buildersdocker
+    args
+      - push
+      - ${_REGION}-docker.pkg.dev$PROJECT_ID${_AR_REPO}sarimax-model$BUILD_ID
+
+  - name gcr.iogoogle.comcloudsdktoolcloud-sdkslim
+    entrypoint bash
+    args
+      - -c
+      - 
+        gcloud run deploy sarimax-model 
+          --image ${_REGION}-docker.pkg.dev$PROJECT_ID${_AR_REPO}sarimax-model$BUILD_ID 
+          --region ${_REGION} 
+          --service-account ${_RUNTIME_SA_EMAIL} 
+          --no-allow-unauthenticated 
+          --cpu 2 
+          --memory 4Gi 
+          --timeout 3600 
+          --concurrency 1 
+          --max-instances 1 
+          --set-env-vars PROJECT_ID=$PROJECT_ID,DATASET=data_procesada_commodities,SOURCE_TABLE=$PROJECT_ID.data_procesada_commodities.hechos_data_proc_commodities,TARGET_TABLE=$PROJECT_ID.data_procesada_commodities.predicciones_commodities,FEATURES_BUCKET=${_BUCKET_RAW},FEATURES_BLOB=datafeaturesdim_features_commodities.csv,MODEL_LABEL=sarimax,HORIZON=10,FUTURE_EXOG_METHOD=last,FUNCTION_TARGET=sarimax_predict,FUNCTION_SOURCE=appsrcsarimaxmain.py
+
+options
+  logging CLOUD_LOGGING_ONLY

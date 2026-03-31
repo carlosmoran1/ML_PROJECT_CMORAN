@@ -1,0 +1,12 @@
+steps:
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        gcloud storage cp \
+          config/model_features/data_features_dim_features_commodities.csv \
+          gs://${_BUCKET_RAW}/data/features/dim_features_commodities.csv
+
+options:
+  logging: CLOUD_LOGGING_ONLY
