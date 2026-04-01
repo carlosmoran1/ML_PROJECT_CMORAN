@@ -20,21 +20,8 @@ RUN mkdir -p /opt/hf-cache && \
     python -m pip install --no-cache-dir --upgrade pip && \
     python -m pip install --no-cache-dir -r /app/requirements.txt && \
     python -m pip show functions-framework && \
-    HF_TOKEN="$HF_TOKEN" python - <<'PY'
-import os
-
-token = os.environ.get("HF_TOKEN")
-if not token:
-    raise RuntimeError("HF_TOKEN no fue pasado al build")
-
-from huggingface_hub import login
-login(token=token, add_to_git_credential=False)
-
-from chronos import Chronos2Pipeline
-Chronos2Pipeline.from_pretrained("autogluon/chronos-2")
-
-print("Chronos2 precacheado correctamente")
-PY
+    test -n "$HF_TOKEN" && \
+    HF_TOKEN="$HF_TOKEN" python -c "import os; from huggingface_hub import login; login(token=os.environ['HF_TOKEN'], add_to_git_credential=False); from chronos import Chronos2Pipeline; Chronos2Pipeline.from_pretrained('autogluon/chronos-2'); print('Chronos2 precacheado correctamente')"
 
 CMD exec sh -c 'python -m functions_framework \
   --target="${FUNCTION_TARGET}" \
