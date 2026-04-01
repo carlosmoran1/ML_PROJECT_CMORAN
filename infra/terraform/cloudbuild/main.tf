@@ -166,7 +166,8 @@ resource "google_cloudbuild_trigger" "autogluon" {
     "src/autogluon_chronos_ii/**",
     "src/common/ml_gcp_utils.py",
     "Dockerfile",
-    "requirements.txt"
+    "requirements.txt",
+    "ci/cloudbuild.autogluon.yaml"
   ]
 
   substitutions = {
