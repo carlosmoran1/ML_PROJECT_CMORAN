@@ -13,3 +13,5 @@ scikit-learn
 autogluon.timeseries
 functions-framework==3.* 
 db-dtypes
+huggingface_hub
+transformers
