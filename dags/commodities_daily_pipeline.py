@@ -17,10 +17,9 @@ from airflow.providers.google.cloud.operators.bigquery import BigQueryInsertJobO
 PROJECT_ID = "proyectos-cmoran-489000"
 BQ_LOCATION = "US"
 
-# COMPLETAR DESPUÉS con los URLs reales de Cloud Run
-ETL_URL = "REEMPLAZAR_ETL_URL"
-SARIMAX_URL = "REEMPLAZAR_SARIMAX_URL"
-AUTOGLUON_URL = "REEMPLAZAR_AUTOGLUON_URL"
+ETL_URL = "https://etl-market-data-kqhzp5nm5q-uc.a.run.app"
+SARIMAX_URL = "https://sarimax-model-kqhzp5nm5q-uc.a.run.app"
+AUTOGLUON_URL = "https://autogluon-chronos-ii-kqhzp5nm5q-uc.a.run.app"
 
 
 def invoke_private_cloud_run(url: str, service_name: str) -> None:
