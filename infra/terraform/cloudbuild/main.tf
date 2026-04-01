@@ -29,7 +29,7 @@ resource "google_project_service" "apis" {
 resource "google_secret_manager_secret_iam_member" "cloudbuild_secret_admin" {
   project   = var.project_id
   secret_id = var.github_token_secret_id
-  role      = "roles/secretmanager.admin"
+  role      = "roles/secretmanager.secretAccessor"
   member    = "serviceAccount:${local.cloud_build_service_agent}"
 
   depends_on = [google_project_service.apis]
