@@ -8,4 +8,6 @@ google-cloud-secret-manager
 flask
 gunicorn 
 fredapi
-numpy 
+numpy  
+functions-framework==3.* 
+db-dtypes

@@ -47,6 +47,12 @@ resource "google_project_iam_member" "cicd_artifactregistry_writer" {
   member  = "serviceAccount:${var.cicd_service_account_email}"
 }
 
+resource "google_project_iam_member" "cicd_logging_log_writer" {
+  project = var.project_id
+  role    = "roles/logging.logWriter"
+  member  = "serviceAccount:${var.cicd_service_account_email}"
+}
+
 resource "google_storage_bucket_iam_member" "cicd_bucket_object_admin" {
   bucket = var.bucket_raw
   role   = "roles/storage.objectAdmin"
@@ -99,8 +105,7 @@ resource "google_cloudbuild_trigger" "etl" {
   included_files = [
     "src/pipelines/etl_market_data/**",
     "src/common/gcp_utils.py",
-    "Dockerfile",
-    "requirements.txt"
+    "ci/cloudbuild.etl.yaml"
   ]
 
   substitutions = {
@@ -132,8 +137,7 @@ resource "google_cloudbuild_trigger" "sarimax" {
   included_files = [
     "src/sarimax/**",
     "src/common/ml_gcp_utils.py",
-    "Dockerfile",
-    "requirements.txt"
+    "ci/cloudbuild.sarimax.yaml"
   ]
 
   substitutions = {
@@ -165,8 +169,6 @@ resource "google_cloudbuild_trigger" "autogluon" {
   included_files = [
     "src/autogluon_chronos_ii/**",
     "src/common/ml_gcp_utils.py",
-    "Dockerfile",
-    "requirements.txt",
     "ci/cloudbuild.autogluon.yaml"
   ]
 

@@ -1,45 +1,81 @@
-# cookiecutter_data_science_base
+# ML_PROJECT_CMORAN
 
-Plantilla base para proyectos de Data Science en GitHub, inspirada en la estructura de Cookiecutter Data Science.
+Pipeline MLOps para pronóstico diario de commodities en GCP, con extracción automatizada de datos de mercado y macroeconomía, procesamiento en BigQuery, modelos SARIMAX y AutoGluon Chronos II desplegados en Cloud Run, y orquestación con Composer/Airflow.
 
-## Estructura
+## Objetivo
+
+Construir un flujo productivo para generar predicciones diarias de commodities a partir de datos externos, exógenas configurables y modelos de series de tiempo, dejando los resultados disponibles en BigQuery para análisis, monitoreo y consumo posterior.
+
+## Arquitectura general
+
+El pipeline sigue este flujo:
+
+1. **ETL en Cloud Run**
+   - Descarga datos desde Yahoo Finance, FRED, EIA y World Bank.
+   - Genera un parquet consolidado en GCS.
+
+2. **Carga y procesamiento en BigQuery**
+   - Se recrea una tabla externa sobre el parquet raw.
+   - Un stored procedure inserta y normaliza los datos en la tabla procesada.
+
+3. **Predicción por modelos**
+   - **SARIMAX**: usa configuraciones por commodity y variables exógenas.
+   - **AutoGluon Chronos II**: usa la misma configuración de exógenas desde GCS.
+
+4. **Modelo mixto**
+   - Un stored procedure combina la dirección de SARIMAX con la magnitud de AutoGluon.
+   - Inserta resultados diarios y mantiene histórico.
+
+5. **Orquestación**
+   - Composer/Airflow ejecuta el pipeline completo de forma programada.
+
+## Componentes principales en GCP
+
+- **Cloud Run**
+  - `etl-market-data`
+  - `sarimax-model`
+  - `autogluon-chronos-ii`
+
+- **Cloud Composer / Airflow**
+  - DAG principal: `commodities_daily_pipeline`
+
+- **Cloud Storage**
+  - Bucket raw/features del proyecto
+  - Parquet raw consolidado
+  - CSV de variables exógenas por commodity
+
+- **BigQuery**
+  - Dataset raw
+  - Dataset procesado
+  - Tablas de predicciones e histórico
+  - Stored procedures de carga y ensamblado
+
+- **Secret Manager**
+  - Claves para FRED, EIA y Hugging Face
+
+- **Cloud Build + GitHub**
+  - CI/CD por servicio, con triggers separados para ETL, SARIMAX, AutoGluon y sincronización de features
+
+## Estructura del repositorio
+
 ```text
-cookiecutter_data_science_base/
-├── .github/workflows/      # CI opcional
-├── config/                 # parámetros y settings
-├── data/
-│   ├── raw/                # datos originales, sin tocar
-│   ├── interim/            # datos intermedios
-│   ├── processed/          # datos listos para modelar
-│   └── external/           # datos externos o de terceros
-├── docs/                   # documentación adicional
-├── models/                 # modelos entrenados o serializados
-├── notebooks/              # notebooks exploratorios
-├── references/             # papers, diccionarios, etc. 
-├── test/                   #test
-├── reports/
-│   └── figures/            # gráficos e imágenes exportadas
+ML_PROJECT_CMORAN/
+├── .github/                           # Configuración de GitHub
+├── ci/                                # Cloud Build YAML por servicio
+├── config/
+│   └── model_features/                # CSV de variables exógenas por commodity
+├── dags/                              # DAG de Composer / Airflow
+├── infra/
+│   └── terraform/
+│       └── cloudbuild/                # Triggers e IAM para CI/CD
+├── notebooks/                         # Exploración y pruebas
 ├── src/
-│   ├── data/               # ingestión / carga de datos
-│   ├── features/           # feature engineering
-│   ├── models/             # entrenamiento / inferencia
-│   └── visualization/      # visualizaciones
+│   ├── autogluon_chronos_ii/          # Servicio AutoGluon
+│   ├── common/                        # Helpers compartidos (GCS, BQ, Secret Manager)
+│   ├── pipelines/
+│   │   └── etl_market_data/           # Servicio ETL
+│   └── sarimax/                       # Servicio SARIMAX
+├── .dockerignore
+├── .gitattributes
 ├── .gitignore
-├── Makefile
-├── pyproject.toml
-└── requirements.txt
-```
-
-## Inicio rápido
-```bash
-git init
-git add .
-git commit -m "Estructura inicial Data Science"
-```
-
-## Recomendación
-
-- Usar `data/raw/` para datos originales.
-- Usar `notebooks/` solo para exploración.
-- Pasar la lógica estable a `src/`.
-
+└── README.md
