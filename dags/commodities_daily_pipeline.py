@@ -113,6 +113,38 @@ with DAG(
             }
         },
         location=BQ_LOCATION,
-    )
+    ) 
+    sp_registros_pipeline = BigQueryInsertJobOperator(
+    task_id="sp_registros_pipeline",
+    configuration={
+        "query": {
+            "query": f"CALL `{PROJECT_ID}.data_metricas_pipeline.SP_GENERA_REGISTROS_PIPELINE`();",
+            "useLegacySql": False,
+        }
+    },
+    location=BQ_LOCATION,
+)
 
-    run_etl >> sp_inserta_datos_historico >> [run_sarimax, run_autogluon] >> sp_modelo_mixto
+    sp_calidad_datos_commodities = BigQueryInsertJobOperator(
+    task_id="sp_calidad_datos_commodities",
+    configuration={
+        "query": {
+            "query": f"CALL `{PROJECT_ID}.data_metricas_pipeline.SP_GENERA_CALIDAD_DATOS_COMMODITIES`();",
+            "useLegacySql": False,
+        }
+    },
+    location=BQ_LOCATION,
+)
+
+    sp_metricas_modelos_diarias = BigQueryInsertJobOperator(
+    task_id="sp_metricas_modelos_diarias",
+    configuration={
+        "query": {
+            "query": f"CALL `{PROJECT_ID}.data_metricas_pipeline.SP_GENERA_METRICAS_MODELOS_DIARIAS`();",
+            "useLegacySql": False,
+        }
+    },
+    location=BQ_LOCATION,
+)
+
+    run_etl >> sp_inserta_datos_historico >> [run_sarimax, run_autogluon] >> sp_modelo_mixto >> sp_registros_pipeline >> sp_calidad_datos_commodities >> sp_metricas_modelos_diarias
