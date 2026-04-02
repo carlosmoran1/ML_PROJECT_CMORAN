@@ -148,3 +148,4 @@ with DAG(
 )
 
     run_etl >> sp_inserta_datos_historico >> [run_sarimax, run_autogluon] >> sp_modelo_mixto >> sp_registros_pipeline >> sp_calidad_datos_commodities >> sp_metricas_modelos_diarias
+    
