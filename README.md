@@ -17,7 +17,7 @@ Yahoo Finance / FRED / EIA / World Bank
               │
               ▼
      ┌─────────────────┐
-     │  ETL – Cloud Run │   → GCS (parquet raw)
+     │  ETL – Cloud Run│   → GCS (parquet raw)
      └─────────────────┘
               │
               ▼
@@ -34,8 +34,8 @@ Yahoo Finance / FRED / EIA / World Bank
          │                   │
          ▼                   ▼
   ┌────────────┐     ┌──────────────────────┐
-  │  SARIMAX   │     │ AutoGluon Chronos II  │   (Cloud Run)
-  │  Cloud Run │     │ Cloud Run             │
+  │  SARIMAX   │     │ AutoGluon Chronos II │   (Cloud Run)
+  │  Cloud Run │     │ Cloud Run            │
   └────────────┘     └──────────────────────┘
          │                   │
          └────────┬──────────┘
