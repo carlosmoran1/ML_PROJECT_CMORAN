@@ -76,13 +76,11 @@ def get_yahoo_session():
     return session
 
 
-
 def get_yahoo_crumb(session: requests.Session):
     """Obtiene el crumb necesario para autenticar requests a Yahoo Finance."""
     session.get("https://finance.yahoo.com", timeout=15)
     r = session.get("https://query1.finance.yahoo.com/v1/test/getcrumb", timeout=15)
     return r.text.strip()
-
 
 
 def download_yahoo_symbol(symbol: str, session: requests.Session, crumb: str):
@@ -126,7 +124,6 @@ def download_yahoo_symbol(symbol: str, session: requests.Session, crumb: str):
     except Exception as e:
         print(f"    Error descargando {symbol}: {e}")
         return pd.Series(dtype=float, name=symbol)
-
 
 
 def download_symbols_yahoo(symbols_map: dict, retries: int = 3, delay: int = 8):
@@ -441,6 +438,14 @@ def run_etl(
 
     df_final = pd.concat(dfs_to_concat, axis=1, join="outer")
     df_final = sanitize_df_for_concat(df_final)
+
+    # FIX: reindexar sobre fechas de mercado (índice de commodities = fuente principal)
+    # Esto elimina las filas con fechas semanales/mensuales/anuales que vienen de
+    # EIA, FRED y World Bank y que no corresponden a días de mercado.
+    # Las columnas de baja frecuencia (EIA, PIB, desempleo, M2) mantienen sus nulls
+    # en días donde no tienen dato — eso es correcto y esperado.
+    df_final = df_final.reindex(df_commodities.index)
+    df_final.index.name = "Date"
 
     print(f"  DataFrame final shape: {df_final.shape}")
     print(f"  Columnas totales: {len(df_final.columns)}")
