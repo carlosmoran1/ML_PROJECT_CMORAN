@@ -2,23 +2,22 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PYTHONPATH=/app \
-    PORT=8080 \
-    HF_HOME=/opt/hf-cache \
-    HUGGINGFACE_HUB_CACHE=/opt/hf-cache \
-    TRANSFORMERS_CACHE=/opt/hf-cache
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONPATH=/app
+ENV PORT=8080
 
-ARG HF_TOKEN
+ENV HF_HOME=/opt/hf-cache
+ENV HUGGINGFACE_HUB_CACHE=/opt/hf-cache
+ENV TRANSFORMERS_CACHE=/opt/hf-cache
 
 COPY src/autogluon_chronos_ii/requirements.txt /app/requirements.txt
-
-RUN mkdir -p /opt/hf-cache && \
-    pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r /app/requirements.txt
-
 COPY src/common /app/src/common
 COPY src/autogluon_chronos_ii /app/src/autogluon_chronos_ii
 
-CMD ["functions-framework", "--source=/app/src/autogluon_chronos_ii/main.py", "--target=autogluon_predict", "--signature-type=http", "--host=0.0.0.0", "--port=8080"]
+RUN mkdir -p /opt/hf-cache && \
+    python -m pip install --no-cache-dir --upgrade pip && \
+    python -m pip install --no-cache-dir -r /app/requirements.txt && \
+    python -m pip show functions-framework
+
+CMD ["sh", "-c", "python -m functions_framework --target=autogluon_predict --source=/app/src/autogluon_chronos_ii/main.py --port=${PORT}"]
