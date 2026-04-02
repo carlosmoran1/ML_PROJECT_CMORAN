@@ -7,7 +7,7 @@ steps:
       - -c
       - |
         docker build \
-          -f Dockerfile \
+          -f src/autogluon_chronos_ii/Dockerfile \
           --build-arg HF_TOKEN="$$HF_TOKEN" \
           -t ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPO}/autogluon-chronos-ii:$BUILD_ID \
           .

@@ -3,7 +3,7 @@ steps:
     args:
       - build
       - -f
-      - Dockerfile
+      - src/pipelines/etl_market_data/Dockerfile
       - -t
       - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPO}/etl-market-data:$BUILD_ID
       - .
