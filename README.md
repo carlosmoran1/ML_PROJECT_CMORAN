@@ -45,8 +45,8 @@ El pipeline sigue este flujo:
   - CSV de variables exógenas por commodity
 
 - **BigQuery**
-  - Dataset raw
-  - Dataset procesado
+  - Dataset raw (10 días)
+  - Dataset procesado (Histórico)
   - Tablas de predicciones e histórico
   - Stored procedures de carga y ensamblado
 
