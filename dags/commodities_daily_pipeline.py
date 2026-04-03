@@ -58,7 +58,7 @@ with DAG(
     dag_id="commodities_daily_pipeline",
     description="ETL + historico + SARIMAX + AutoGluon + modelo mixto",
     start_date=pendulum.datetime(2026, 4, 1, tz="America/Santiago"),
-    schedule="0 21 * * *",
+    schedule="0 9 * * *",
     catchup=False,
     max_active_runs=1,
     dagrun_timeout=timedelta(hours=5),
