@@ -84,10 +84,16 @@ def get_yahoo_crumb(session: requests.Session):
 
 
 def download_yahoo_symbol(symbol: str, session: requests.Session, crumb: str):
-    """Descarga datos históricos de cierre de un símbolo desde Yahoo Finance."""
-    today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
-    end_ts = int((today - timedelta(days=1)).timestamp())
-    start_ts = int((today - timedelta(days=10)).timestamp())
+    """
+    Descarga datos históricos de cierre de un símbolo desde Yahoo Finance.
+
+    Regla de corte:
+    - incluye hasta el último día cerrado
+    - excluye el día actual para evitar aperturas o datos parciales intradía
+    """
+    utc_today = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
+    end_ts = int(utc_today.timestamp())
+    start_ts = int((utc_today - timedelta(days=10)).timestamp())
 
     url = (
         f"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}"
@@ -114,6 +120,10 @@ def download_yahoo_symbol(symbol: str, session: requests.Session, crumb: str):
         s = pd.Series(closes, index=dates, name=symbol)
         s = s[s.index.notna()].dropna()
         s.index = pd.to_datetime(s.index, errors="coerce").normalize()
+
+        # Seguridad extra: si Yahoo devolviera el día actual por algún desfase
+        # horario, se elimina para no guardar aperturas o datos parciales.
+        s = s[s.index < pd.Timestamp(utc_today)]
 
         if s.index.has_duplicates:
             s = s[~s.index.duplicated(keep="last")]
