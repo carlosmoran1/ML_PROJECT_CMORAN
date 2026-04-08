@@ -82,6 +82,7 @@ def naive_forecast_from_history(
         raise ValueError(f"[{asset}] no tiene historia válida para fallback naive.")
 
     last_val = float(hist.iloc[-1])
+    print(f"[FALLBACK_NAIVE] {asset}: usando último valor repetido = {last_val}")
     return pd.Series([last_val] * len(future_index), index=future_index, name=asset)
 
 
@@ -96,12 +97,21 @@ def _fit_predict_autogluon(
 ) -> pd.DataFrame:
     exog_cols = exog_cols or []
 
+    train_reset = train_reset.copy()
+    train_reset["timestamp"] = pd.to_datetime(train_reset["timestamp"])
+
     keep_cols = ["item_id", "timestamp", "target"] + exog_cols
     train_data = TimeSeriesDataFrame.from_data_frame(
         train_reset[keep_cols],
         id_column="item_id",
         timestamp_column="timestamp",
     )
+
+    # Fuerza frecuencia de días hábiles para evitar que AutoGluon intente inferirla
+    train_data = train_data.convert_frequency(freq="B")
+
+    if known_covariates is not None:
+        known_covariates = known_covariates.convert_frequency(freq="B")
 
     predictor = TimeSeriesPredictor(
         target="target",
@@ -110,6 +120,7 @@ def _fit_predict_autogluon(
         known_covariates_names=exog_cols if exog_cols else None,
         path=model_path,
         verbosity=2,
+        freq="B",
     ).fit(
         train_data=train_data,
         presets=preset,
@@ -166,6 +177,7 @@ def forecast_one_asset(
 
     train_reset = df_train.reset_index().rename(columns={"date": "timestamp", asset: "target"})
     train_reset["item_id"] = asset
+    train_reset["timestamp"] = pd.to_datetime(train_reset["timestamp"])
     train_reset["target"] = pd.to_numeric(train_reset["target"], errors="coerce")
     train_reset = train_reset[train_reset["target"].notna()].copy()
 
@@ -189,6 +201,7 @@ def forecast_one_asset(
             )
 
             x_future = x_future.reset_index().rename(columns={"index": "timestamp"})
+            x_future["timestamp"] = pd.to_datetime(x_future["timestamp"])
             x_future["item_id"] = asset
 
             known_covariates = TimeSeriesDataFrame.from_data_frame(
@@ -242,6 +255,7 @@ def forecast_one_asset(
         print(f"[WARN] {asset}: largo de predicción inesperado. Usando fallback naive.")
         return naive_forecast_from_history(asset, df_full, future_index)
 
+    print(f"[DEBUG] {asset}: nunique_pred={series.nunique()} valores={series.tolist()}")
     return pd.Series(series.values, index=future_index, name=asset)
 
 
