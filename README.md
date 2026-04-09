@@ -52,7 +52,7 @@ Yahoo Finance / FRED / EIA / World Bank
      └──────────────────────────────────┘
 ```
 
-El DAG `commodities_daily_pipeline` orquesta el flujo completo vía **Cloud Composer / Airflow**, con ejecución programada a las **21:00 hora Chile**, **2 reintentos** y **30 minutos** de espera entre intentos.
+El DAG `commodities_daily_pipeline` orquesta el flujo completo vía **Cloud Composer / Airflow**, con ejecución programada a las **09:00 hora Chile**, **2 reintentos** y **30 minutos** de espera entre intentos.
 
 ---
 
