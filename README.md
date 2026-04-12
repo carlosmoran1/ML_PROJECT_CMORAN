@@ -103,7 +103,8 @@ Fuentes externas
               └──────────┬─────────┘
                          ▼
         ┌──────────────────────────────┐
-        │ BigQuery - consolidación     │
+        │ BigQuery - consolidación  -  │
+        │           capa plata         │
         │ modelo mixto e histórico     │
         └──────────────────────────────┘
                          │
