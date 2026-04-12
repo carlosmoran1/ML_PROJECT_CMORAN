@@ -297,6 +297,8 @@ Estas dimensiones permiten que el dashboard no se limite a mostrar resultados nu
 
 ### Lenguaje principal
 - Python
+- SQL
+- DAX
 
 ### Servicios cloud
 - Google Cloud Storage
