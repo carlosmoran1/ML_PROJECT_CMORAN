@@ -160,7 +160,10 @@ Modelo de series de tiempo orientado a capturar estructura temporal, tendencia, 
 Modelo fundacional para series de tiempo, útil para capturar patrones complejos y complementar el enfoque estadístico tradicional.
 
 ### Modelo mixto
-El proyecto también contempla una lógica de consolidación para combinar fortalezas de distintos enfoques dentro del flujo productivo.
+El proyecto también contempla una lógica de consolidación para combinar fortalezas de distintos enfoques dentro del flujo productivo. 
+
+### Modelo Ensamblado
+Modelo basado en el promedio simple de las predicciones de Choronos II y SARIMAX .
 
 ---
 
@@ -297,6 +300,8 @@ Estas dimensiones permiten que el dashboard no se limite a mostrar resultados nu
 
 ### Lenguaje principal
 - Python
+- SQL
+- DAX
 
 ### Servicios cloud
 - Google Cloud Storage
@@ -336,3 +341,4 @@ Además de la capa predictiva, el repositorio ya incorpora una capa SQL más com
 **Carlos Morán**
 
 Repositorio: [ML_PROJECT_CMORAN](https://github.com/carlosmoran1/ML_PROJECT_CMORAN)
+LinkedIn: [Carlos Morán](https://www.linkedin.com/in/carlos-mor%C3%A1n-data-science-engineer-ia/)
