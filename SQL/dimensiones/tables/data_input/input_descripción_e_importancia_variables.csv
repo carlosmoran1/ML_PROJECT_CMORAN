@@ -1,0 +1,85 @@
+commodity,commodity_nombre,frecuencia_prediccion,dias_sin_fds,variable,orden_variable,variable_larga,descripcion
+oro,Oro,Diaria,10,amd,3,AMD,Empresa tecnológica del sector de semiconductores y chips.
+cobre,Cobre,Diaria,10,aem,1,Agnico Eagle Mines,Empresa minera enfocada principalmente en la explotación de oro.
+oro,Oro,Diaria,10,aem,1,Agnico Eagle Mines,Empresa minera enfocada principalmente en la explotación de oro.
+petroleo_brent,Petróleo Brent,Diaria,10,aem,1,Agnico Eagle Mines,Empresa minera enfocada principalmente en la explotación de oro.
+plata,Plata,Diaria,10,aem,1,Agnico Eagle Mines,Empresa minera enfocada principalmente en la explotación de oro.
+gas_natural,Gas Natural,Diaria,10,googl,3,Alphabet,"Empresa tecnológica global vinculada a publicidad digital, nube y servicios de internet."
+cobre,Cobre,Diaria,10,bhp,3,BHP Group,Compañía minera global diversificada con exposición relevante a cobre y otros metales.
+oro,Oro,Diaria,10,bhp,4,BHP Group,Compañía minera global diversificada con exposición relevante a cobre y otros metales.
+petroleo_brent,Petróleo Brent,Diaria,10,bhp,3,BHP Group,Compañía minera global diversificada con exposición relevante a cobre y otros metales.
+plata,Plata,Diaria,10,bhp,3,BHP Group,Compañía minera global diversificada con exposición relevante a cobre y otros metales.
+cobre,Cobre,Diaria,10,ctra,4,Coterra Energy,Empresa energética con foco en gas natural y petróleo.
+oro,Oro,Diaria,10,ctra,5,Coterra Energy,Empresa energética con foco en gas natural y petróleo.
+petroleo_brent,Petróleo Brent,Diaria,10,ctra,4,Coterra Energy,Empresa energética con foco en gas natural y petróleo.
+plata,Plata,Diaria,10,ctra,4,Coterra Energy,Empresa energética con foco en gas natural y petróleo.
+cobre,Cobre,Diaria,10,desempleo_can,5,Desempleo de Canadá,Indicador macroeconómico del mercado laboral de Canadá.
+gas_natural,Gas Natural,Diaria,10,desempleo_can,1,Desempleo de Canadá,Indicador macroeconómico del mercado laboral de Canadá.
+oro,Oro,Diaria,10,desempleo_can,6,Desempleo de Canadá,Indicador macroeconómico del mercado laboral de Canadá.
+petroleo_brent,Petróleo Brent,Diaria,10,desempleo_can,5,Desempleo de Canadá,Indicador macroeconómico del mercado laboral de Canadá.
+plata,Plata,Diaria,10,desempleo_can,5,Desempleo de Canadá,Indicador macroeconómico del mercado laboral de Canadá.
+gas_natural,Gas Natural,Diaria,10,desempleo_usa,2,Desempleo de Estados Unidos,Indicador macroeconómico del mercado laboral de Estados Unidos.
+oro,Oro,Diaria,10,desempleo_usa,10,Desempleo de Estados Unidos,Indicador macroeconómico del mercado laboral de Estados Unidos.
+petroleo_brent,Petróleo Brent,Diaria,10,desempleo_usa,7,Desempleo de Estados Unidos,Indicador macroeconómico del mercado laboral de Estados Unidos.
+plata,Plata,Diaria,10,desempleo_usa,7,Desempleo de Estados Unidos,Indicador macroeconómico del mercado laboral de Estados Unidos.
+oro,Oro,Diaria,10,desempleo_fra,7,Desempleo de Francia,Indicador macroeconómico del mercado laboral de Francia.
+oro,Oro,Diaria,10,desempleo_ita,8,Desempleo de Italia,Indicador macroeconómico del mercado laboral de Italia.
+petroleo_brent,Petróleo Brent,Diaria,10,desempleo_ita,6,Desempleo de Italia,Indicador macroeconómico del mercado laboral de Italia.
+oro,Oro,Diaria,10,desempleo_jpn,9,Desempleo de Japón,Indicador macroeconómico del mercado laboral de Japón.
+plata,Plata,Diaria,10,desempleo_jpn,6,Desempleo de Japón,Indicador macroeconómico del mercado laboral de Japón.
+cobre,Cobre,Diaria,10,eqt,7,EQT Corporation,Empresa energética enfocada principalmente en producción de gas natural.
+oro,Oro,Diaria,10,eqt,13,EQT Corporation,Empresa energética enfocada principalmente en producción de gas natural.
+petroleo_brent,Petróleo Brent,Diaria,10,eqt,9,EQT Corporation,Empresa energética enfocada principalmente en producción de gas natural.
+plata,Plata,Diaria,10,eqt,10,EQT Corporation,Empresa energética enfocada principalmente en producción de gas natural.
+petroleo_brent,Petróleo Brent,Diaria,10,xom,20,Exxon Mobil,Empresa energética global con operaciones en petróleo y gas.
+cobre,Cobre,Diaria,10,ag,2,First Majestic Silver,Empresa minera enfocada principalmente en la producción de plata.
+oro,Oro,Diaria,10,ag,2,First Majestic Silver,Empresa minera enfocada principalmente en la producción de plata.
+petroleo_brent,Petróleo Brent,Diaria,10,ag,2,First Majestic Silver,Empresa minera enfocada principalmente en la producción de plata.
+plata,Plata,Diaria,10,ag,2,First Majestic Silver,Empresa minera enfocada principalmente en la producción de plata.
+cobre,Cobre,Diaria,10,fcx,8,Freeport-McMoRan,Empresa minera con fuerte exposición a cobre y oro.
+oro,Oro,Diaria,10,fcx,14,Freeport-McMoRan,Empresa minera con fuerte exposición a cobre y oro.
+petroleo_brent,Petróleo Brent,Diaria,10,fcx,10,Freeport-McMoRan,Empresa minera con fuerte exposición a cobre y oro.
+plata,Plata,Diaria,10,fcx,11,Freeport-McMoRan,Empresa minera con fuerte exposición a cobre y oro.
+oro,Oro,Diaria,10,dxy_fut,11,Futuros del índice dólar,"Contrato de futuros del índice dólar, referencia de fortaleza del USD."
+plata,Plata,Diaria,10,dxy_fut,8,Futuros del índice dólar,"Contrato de futuros del índice dólar, referencia de fortaleza del USD."
+cobre,Cobre,Diaria,10,gas_natural,9,Gas natural,Commodity energético utilizado como referencia del precio del gas natural.
+petroleo_brent,Petróleo Brent,Diaria,10,gas_natural,11,Gas natural,Commodity energético utilizado como referencia del precio del gas natural.
+cobre,Cobre,Diaria,10,kgc,10,Kinross Gold,Empresa minera enfocada principalmente en la explotación de oro.
+oro,Oro,Diaria,10,kgc,15,Kinross Gold,Empresa minera enfocada principalmente en la explotación de oro.
+petroleo_brent,Petróleo Brent,Diaria,10,kgc,12,Kinross Gold,Empresa minera enfocada principalmente en la explotación de oro.
+plata,Plata,Diaria,10,kgc,12,Kinross Gold,Empresa minera enfocada principalmente en la explotación de oro.
+cobre,Cobre,Diaria,10,nem,11,Newmont,Una de las mayores empresas mineras de oro a nivel mundial.
+gas_natural,Gas Natural,Diaria,10,nem,4,Newmont,Una de las mayores empresas mineras de oro a nivel mundial.
+oro,Oro,Diaria,10,nem,16,Newmont,Una de las mayores empresas mineras de oro a nivel mundial.
+petroleo_brent,Petróleo Brent,Diaria,10,nem,13,Newmont,Una de las mayores empresas mineras de oro a nivel mundial.
+plata,Plata,Diaria,10,nem,13,Newmont,Una de las mayores empresas mineras de oro a nivel mundial.
+petroleo_brent,Petróleo Brent,Diaria,10,pib_ita,16,PIB de Italia,Indicador macroeconómico de actividad económica de Italia.
+oro,Oro,Diaria,10,pib_gbr,19,PIB del Reino Unido,Indicador macroeconómico de actividad económica del Reino Unido.
+petroleo_brent,Petróleo Brent,Diaria,10,pib_gbr,15,PIB del Reino Unido,Indicador macroeconómico de actividad económica del Reino Unido.
+plata,Plata,Diaria,10,pib_gbr,16,PIB del Reino Unido,Indicador macroeconómico de actividad económica del Reino Unido.
+cobre,Cobre,Diaria,10,paas,12,Pan American Silver,Empresa minera enfocada principalmente en plata y metales preciosos.
+gas_natural,Gas Natural,Diaria,10,paas,5,Pan American Silver,Empresa minera enfocada principalmente en plata y metales preciosos.
+oro,Oro,Diaria,10,paas,17,Pan American Silver,Empresa minera enfocada principalmente en plata y metales preciosos.
+petroleo_brent,Petróleo Brent,Diaria,10,paas,14,Pan American Silver,Empresa minera enfocada principalmente en plata y metales preciosos.
+plata,Plata,Diaria,10,paas,14,Pan American Silver,Empresa minera enfocada principalmente en plata y metales preciosos.
+cobre,Cobre,Diaria,10,petroleo_brent,13,Petróleo Brent,Commodity energético usado como benchmark internacional del petróleo.
+oro,Oro,Diaria,10,petroleo_brent,18,Petróleo Brent,Commodity energético usado como benchmark internacional del petróleo.
+plata,Plata,Diaria,10,petroleo_brent,15,Petróleo Brent,Commodity energético usado como benchmark internacional del petróleo.
+gas_natural,Gas Natural,Diaria,10,plata,6,Plata,Metal precioso e industrial usado como referencia del precio de la plata.
+petroleo_brent,Petróleo Brent,Diaria,10,plata,17,Plata,Metal precioso e industrial usado como referencia del precio de la plata.
+cobre,Cobre,Diaria,10,shel,14,Shell,Empresa energética global con operaciones en petróleo y gas.
+oro,Oro,Diaria,10,shel,20,Shell,Empresa energética global con operaciones en petróleo y gas.
+plata,Plata,Diaria,10,shel,17,Shell,Empresa energética global con operaciones en petróleo y gas.
+oro,Oro,Diaria,10,tasa_5y,21,Tasa del Tesoro a 5 años,Rendimiento del bono del Tesoro de Estados Unidos a 5 años.
+oro,Oro,Diaria,10,wpm,23,Wheaton Precious Metals,"Empresa vinculada a metales preciosos, especialmente a través de streaming y royalties."
+plata,Plata,Diaria,10,wpm,19,Wheaton Precious Metals,"Empresa vinculada a metales preciosos, especialmente a través de streaming y royalties."
+cobre,Cobre,Diaria,10,sp500,15,Índice S&P 500,Índice bursátil de las principales empresas de Estados Unidos.
+cobre,Cobre,Diaria,10,vix,16,Índice VIX,Índice que mide volatilidad esperada del mercado accionario estadounidense.
+oro,Oro,Diaria,10,vix,22,Índice VIX,Índice que mide volatilidad esperada del mercado accionario estadounidense.
+petroleo_brent,Petróleo Brent,Diaria,10,vix,19,Índice VIX,Índice que mide volatilidad esperada del mercado accionario estadounidense.
+plata,Plata,Diaria,10,vix,18,Índice VIX,Índice que mide volatilidad esperada del mercado accionario estadounidense.
+petroleo_brent,Petróleo Brent,Diaria,10,shanghai,18,Índice de Shanghái,Índice bursátil representativo del mercado accionario de Shanghái.
+cobre,Cobre,Diaria,10,emergentes,6,Índice de mercados emergentes,Índice que representa el comportamiento de mercados emergentes.
+oro,Oro,Diaria,10,emergentes,12,Índice de mercados emergentes,Índice que representa el comportamiento de mercados emergentes.
+petroleo_brent,Petróleo Brent,Diaria,10,emergentes,8,Índice de mercados emergentes,Índice que representa el comportamiento de mercados emergentes.
+plata,Plata,Diaria,10,emergentes,9,Índice de mercados emergentes,Índice que representa el comportamiento de mercados emergentes.
