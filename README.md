@@ -341,3 +341,4 @@ Además de la capa predictiva, el repositorio ya incorpora una capa SQL más com
 **Carlos Morán**
 
 Repositorio: [ML_PROJECT_CMORAN](https://github.com/carlosmoran1/ML_PROJECT_CMORAN)
+LinkedIn: [Carlos Morán](https://www.linkedin.com/in/carlos-mor%C3%A1n-data-science-engineer-ia/)
